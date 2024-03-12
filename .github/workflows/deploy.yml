@@ -1,0 +1,38 @@
+name: Deployment Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'The target environment'
+        type: string
+        required: true
+        default: "Production"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: /home/runner/work/ticketsservice  # Set global working directory
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: .github/workflows/
+
+      - name: Deploy to ${{inputs.environment}}
+        run: |
+          #Your deployment script or commands based on the environment
+          echo "Deploying to ${{inputs.environment}} environment"
+
+      - name: List directory contents
+        run: pwd
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
