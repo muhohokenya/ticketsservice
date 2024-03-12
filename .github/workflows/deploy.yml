@@ -17,12 +17,12 @@ jobs:
           path: .github/workflows/
 
       - name: List directory contents
-        run: pwd
+        run: ls -la
 
-      - name: Restore dependencies
-        run: dotnet restore
-        working-directory: ./ticketsservice
-
-      - name: Build
-        run: dotnet build --no-restore
-        working-directory: ./ticketsservice
+#      - name: Restore dependencies
+#        run: dotnet restore
+#        working-directory: ./ticketsservice
+#
+#      - name: Build
+#        run: dotnet build --no-restore
+#        working-directory: ./ticketsservice
