@@ -12,27 +12,29 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: List files
-        run : |
+        run: |
           ls -la
-          
+
       - name: Print Runner IP
         run: |
           echo "IP address of the current GitHub runner:"
           host $(hostname)
-          
+
       - name: Build Docker image
         run: |
-          docker build -t muhohoweb/tickets-service:1.0.5 .
+          DOCKER_TAG=$(echo "1.0.5-$(git rev-parse --short HEAD)")
+          docker build -t muhohoweb/tickets-service:$DOCKER_TAG .
           docker images
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
-            username: ${{ secrets.DOCKER_HUB_USERNAME }}
-            password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push muhohoweb/tickets-service:1.0.5     
+          DOCKER_TAG=$(echo "1.0.5-$(git rev-parse --short HEAD)")
+          docker push muhohoweb/tickets-service:$DOCKER_TAG
