@@ -1,21 +1,14 @@
-name: Deployment Workflow
+name: ci
 
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'The target environment'
-        type: string
-        required: true
-        default: "Production"
+  push:
+    branches:
+      - "master"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: /home/runner/work/ticketsservice  # Set global working directory
-
+  
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
