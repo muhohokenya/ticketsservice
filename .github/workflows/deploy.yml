@@ -19,7 +19,7 @@ jobs:
           
       - name: Build Docker image
         run: |
-          docker build -t muhohoweb:tickets-service:"1.0.5" .
+          docker build -t muhohoweb/tickets-service:1.0.5 .
           docker images
 
       - name: Log in to Docker Hub
@@ -30,4 +30,4 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push muhohoweb:tickets-service:"1.0.5"     
+          docker push muhohoweb/tickets-service:1.0.5     
