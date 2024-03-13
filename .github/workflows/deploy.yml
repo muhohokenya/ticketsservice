@@ -42,7 +42,7 @@ jobs:
         run: |
             # Example: Download and install VPN client from a URL
             # sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://packages.openvpn.net/packages-repo.gpg | sudo tee /etc/apt/keyrings/openvpn.asc
-            DISTRO=$(lsb_release -c | awk '{print $2}')
+            echo DISTRO=$(lsb_release -c | awk '{print $2}')
           
 #      - name: Connect to VPN
 #        run: |
