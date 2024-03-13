@@ -49,7 +49,6 @@ jobs:
             sudo apt-get --assume-yes --no-install-recommends install openvpn
             echo "${{ secrets.OPEN_VPN }}" > config.ovpn
             echo "${{ secrets.MAIN_KEY_PRIVATE }}" > main_key.pem
-            rm ~/.ssh/known_hosts
           
       - name: Connect VPN
         uses: golfzaptw/action-connect-ovpn@master
@@ -67,9 +66,15 @@ jobs:
       - name: Check Connect VPN
         run: echo ${{ steps.connect_vpn.outputs.STATUS }}  
           
-      - name: Ping Private IP
-        run: |
-          ssh -i main_key ubuntu@10.0.141.195
+      - name: Ssh and Deploy
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+            host: "10.0.141.195"
+            key: ${{ secrets.MAIN_KEY_PRIVATE }}
+            username: "ubunutu"
+            port: 22
+            script: | 
+                  ls -la
         
       
       
