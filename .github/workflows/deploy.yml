@@ -56,7 +56,7 @@ jobs:
           
           ls -la
           # Command to connect to VPN using certificates
-          exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --verb 3
+          exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
           
       - name: Ping Private Instances
         run: |
