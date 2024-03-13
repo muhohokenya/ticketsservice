@@ -65,9 +65,9 @@ jobs:
       - name: Check Connect VPN
         run: echo ${{ steps.connect_vpn.outputs.STATUS }}  
           
-      - name: SSH
+      - name: Ping Private IP
         run: |
-          ping @10.0.141.195
+          ping 10.0.141.195
         
       
       
