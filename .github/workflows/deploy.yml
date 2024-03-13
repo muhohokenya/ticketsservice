@@ -66,7 +66,7 @@ jobs:
       - name: Check Connect VPN
         run: echo ${{ steps.connect_vpn.outputs.STATUS }}  
           
-      - name: Ssh and Deploy
+      - name: Ssh to private ec2
         uses: appleboy/ssh-action@v0.1.10
         with:
             host: "10.0.141.195"
