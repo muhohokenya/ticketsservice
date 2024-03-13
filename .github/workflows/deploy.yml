@@ -47,9 +47,9 @@ jobs:
       - name: Connect to VPN
         run: |
           # Write client certificate to file
-          echo "${{ secrets.CLIENT_CERT }}" > client.crt
+          echo "${{ secrets.VPN_CLIENT_CERT }}" > client.crt
           # Write client private key to file
-          echo "${{ secrets.CLIENT_KEY }}" > client.key
+          echo "${{ secrets.VPN_CLIENT_KEY }}" > client.key
           
           # Write OPEN_VPN private key to file
           echo "${{ secrets.OPEN_VPN }}" > config.ovpn
