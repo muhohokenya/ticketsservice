@@ -36,4 +36,18 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push muhohoweb/tickets-service:1.0.5     
+          docker push muhohoweb/tickets-service:1.0.5
+          
+      - name: Connect to VPN
+        run: |
+          # Write client certificate to file
+          echo "${{ secrets.CLIENT_CERT }}" > client.crt
+          # Write client private key to file
+          echo "${{ secrets.CLIENT_KEY }}" > client.key
+          
+          # Command to connect to VPN using certificates
+          vpn-client connect --certificate client.crt --private-key client.key
+          
+          env:
+            CLIENT_CERT: ${{ secrets.CLIENT_CERT }}
+            CLIENT_KEY: ${{ secrets.CLIENT_KEY }}
