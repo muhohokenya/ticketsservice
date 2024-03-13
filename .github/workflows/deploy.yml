@@ -12,17 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: List files
-        run : |
-          ls -la
-          
-          
-      - name: Print Runner IP
-        run: |
-          echo "IP address of the current GitHub runner:"
-          host $(hostname)
-          
 #      - name: Build Docker image
 #        run: |
 #          docker build -t muhohoweb/tickets-service:1.0.5 .
@@ -58,12 +47,13 @@ jobs:
           sudo openvpn --config config.ovpn --daemon
           
       - name: Get IP address
-        run:
+        run: |
             curl https://api.ipify.org
           
       - name: SSH
         run: |
           ssh -v ubuntu@10.0.141.195
+        
       
       
 
