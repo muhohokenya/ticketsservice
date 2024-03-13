@@ -23,38 +23,37 @@ jobs:
           echo "IP address of the current GitHub runner:"
           host $(hostname)
           
-      - name: Build Docker image
-        run: |
-          docker build -t muhohoweb/tickets-service:1.0.5 .
-          docker images
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
-        with:
-            username: ${{ secrets.DOCKER_HUB_USERNAME }}
-            password: ${{ secrets.DOCKER_HUB_TOKEN }}
-
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker push muhohoweb/tickets-service:1.0.5
+#      - name: Build Docker image
+#        run: |
+#          docker build -t muhohoweb/tickets-service:1.0.5 .
+#          docker images
+#
+#      - name: Log in to Docker Hub
+#        uses: docker/login-action@v1
+#        with:
+#            username: ${{ secrets.DOCKER_HUB_USERNAME }}
+#            password: ${{ secrets.DOCKER_HUB_TOKEN }}
+#
+#      - name: Push Docker image to Docker Hub
+#        run: |
+#          docker push muhohoweb/tickets-service:1.0.5
 
       - name: Install VPN client
         run: |
             # Example: Download and install VPN client from a URL
-            wget -O vpn-client.deb https://example.com/vpn-client.deb
-            sudo dpkg -i vpn-client.deb || true  # Ignore failure if already installed
-            sudo apt-get -f install -y  # Attempt to fix dependencies
+            # sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://packages.openvpn.net/packages-repo.gpg | sudo tee /etc/apt/keyrings/openvpn.asc
+            DISTRO=$(lsb_release -c | awk '{print $2}')
           
-      - name: Connect to VPN
-        run: |
-          # Write client certificate to file
-          echo "${{ secrets.CLIENT_CERT }}" > client.crt
-          # Write client private key to file
-          echo "${{ secrets.CLIENT_KEY }}" > client.key
-          
-          # Command to connect to VPN using certificates
-          vpn-client connect --certificate client.crt --private-key client.key
-          
-          env:
-            CLIENT_CERT: ${{ secrets.CLIENT_CERT }}
-            CLIENT_KEY: ${{ secrets.CLIENT_KEY }}
+#      - name: Connect to VPN
+#        run: |
+#          # Write client certificate to file
+#          echo "${{ secrets.CLIENT_CERT }}" > client.crt
+#          # Write client private key to file
+#          echo "${{ secrets.CLIENT_KEY }}" > client.key
+#          
+#          # Command to connect to VPN using certificates
+#          vpn-client connect --certificate client.crt --private-key client.key
+#          
+#          env:
+#            CLIENT_CERT: ${{ secrets.CLIENT_CERT }}
+#            CLIENT_KEY: ${{ secrets.CLIENT_KEY }}
