@@ -61,5 +61,5 @@ jobs:
       - name: Ping Private Instances
         run: |
           # Ping private instances
-          ping 10.0.141.195
+          ssh ubuntu@10.0.141.195
 
