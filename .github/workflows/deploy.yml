@@ -58,8 +58,8 @@ jobs:
           # Command to connect to VPN using certificates
           exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
           
-      - name: Ping Private Instances
+      - name: Ssh into Private ec2
         run: |
-          # Ping private instances
-          ssh ubuntu@10.0.141.195
+          # Ssh into Private ec2
+          ssh ubuntu@10.0.141.195 --daemon
 
