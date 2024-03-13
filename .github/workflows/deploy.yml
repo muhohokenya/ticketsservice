@@ -59,7 +59,7 @@ jobs:
           
       - name: Get IP address
         run:
-          echo 'Runner IP address $(curl -s ifconfig.me)'
+            curl https://api.ipify.org
           
       - name: SSH
         run: |
