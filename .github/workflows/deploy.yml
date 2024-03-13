@@ -71,7 +71,7 @@ jobs:
         with:
             host: "10.0.141.195"
             key: ${{ secrets.MAIN_KEY_PRIVATE }}
-            username: "ubunutu"
+            username: "ubuntu"
             port: 22
             script: | 
                   ls -la
