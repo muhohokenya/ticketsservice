@@ -45,10 +45,7 @@ jobs:
           # Command to connect to VPN using certificates
           # exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
           sudo openvpn --config config.ovpn --daemon
-          
-      - name: Get IP address
-        run: |
-            curl https://api.ipify.org
+          curl https://api.ipify.org
           
       - name: SSH
         run: |
