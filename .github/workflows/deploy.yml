@@ -67,7 +67,7 @@ jobs:
           
       - name: Ping Private IP
         run: |
-          ping 10.0.141.195
+          ssh ubuntu@10.0.141.195
         
       
       
