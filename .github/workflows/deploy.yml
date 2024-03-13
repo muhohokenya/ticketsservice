@@ -57,9 +57,7 @@ jobs:
           ls -la
           # Command to connect to VPN using certificates
           exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
-          
-      - name: Ssh into Private ec2
-        run: |
-          # Ssh into Private ec2
-          ssh ubuntu@10.0.141.195 --daemon
+          ssh ubuntu@10.0.141.195
+      
+      
 
