@@ -27,25 +27,42 @@ jobs:
 #        run: |
 #          docker push muhohoweb/tickets-service:1.0.5
 
+#      - name: Connect to VPN
+#        run: |
+#          # Write client certificate to file
+#          echo "${{ secrets.VPN_CLIENT_CERT }}" > client.crt
+#          # Write client private key to file
+#          echo "${{ secrets.VPN_CLIENT_KEY }}" > client.key
+#
+#          # Write OPEN_VPN private key to file
+#          echo "${{ secrets.OPEN_VPN }}" > config.ovpn
+#
+#          # Command to connect to VPN using certificates
+#          # exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
+#          sudo openvpn --config config.ovpn --daemon
+#          curl https://api.ipify.org
+          
+          
       - name: Install OpenVPN
         run: |
             sudo apt-get update
             sudo apt-get --assume-yes --no-install-recommends install openvpn
           
-      - name: Connect to VPN
-        run: |
-          # Write client certificate to file
-          echo "${{ secrets.VPN_CLIENT_CERT }}" > client.crt
-          # Write client private key to file
-          echo "${{ secrets.VPN_CLIENT_KEY }}" > client.key
-          
-          # Write OPEN_VPN private key to file
-          echo "${{ secrets.OPEN_VPN }}" > config.ovpn
-          
-          # Command to connect to VPN using certificates
-          # exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
-          sudo openvpn --config config.ovpn --daemon
-          curl https://api.ipify.org
+      - name: Connect VPN
+        uses: golfzaptw/action-connect-ovpn@master
+        id: connect_vpn
+        with:
+          PING_URL: '127.0.0.1'
+          FILE_OVPN: config.ovpn
+          SECRET: ${{ secrets.VPN_CLIENT_KEY }}
+          TLS_KEY: ""
+        env:
+          CA_CRT: ${{ secrets.VPN_CA_CRT}}
+          USER_CRT: ${{ secrets.VPN_CLIENT_CERT }}
+          USER_KEY: ${{ secrets.VPN_CLIENT_KEY }}
+      
+      - name: Check Connect VPN
+        run: echo ${{ steps.connect_vpn.outputs.STATUS }}  
           
       - name: SSH
         run: |
