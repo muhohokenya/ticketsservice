@@ -47,7 +47,7 @@ jobs:
         run: |
             sudo apt-get update
             sudo apt-get --assume-yes --no-install-recommends install openvpn
-            echo "${{ secrets.OPEN_VPN }}" > config.ovpn
+          echo "${{ secrets.OPEN_VPN }}" > config.ovpn
           
       - name: Connect VPN
         uses: golfzaptw/action-connect-ovpn@master
@@ -67,7 +67,7 @@ jobs:
           
       - name: SSH
         run: |
-          ssh -v ubuntu@10.0.141.195
+          ping @10.0.141.195
         
       
       
