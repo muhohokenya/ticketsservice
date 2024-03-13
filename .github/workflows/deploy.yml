@@ -75,6 +75,11 @@ jobs:
             port: 22
             script: | 
                   ls -la
+              
+              
+      - name: kill vpn
+        if: always()
+        run: sudo killall openvpn
         
       
       
