@@ -54,7 +54,6 @@ jobs:
           # Write OPEN_VPN private key to file
           echo "${{ secrets.OPEN_VPN }}" > config.ovpn
           
-          ls -la
           # Command to connect to VPN using certificates
           exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
           ssh ubuntu@10.0.141.195
