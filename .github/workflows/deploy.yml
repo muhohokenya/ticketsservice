@@ -49,6 +49,7 @@ jobs:
             sudo apt-get --assume-yes --no-install-recommends install openvpn
             echo "${{ secrets.OPEN_VPN }}" > config.ovpn
             echo "${{ secrets.MAIN_KEY_PRIVATE }}" > main_key.pem
+            rm ~/.ssh/known_hosts
           
       - name: Connect VPN
         uses: golfzaptw/action-connect-ovpn@master
