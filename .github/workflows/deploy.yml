@@ -59,7 +59,7 @@ jobs:
           
       - name: Get IP address
         run:
-          echo 'Runner IP address: $(curl -s ifconfig.me)'
+          echo 'Runner IP address $(curl -s ifconfig.me)'
           
       - name: SSH
         run: |
