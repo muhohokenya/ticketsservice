@@ -56,5 +56,5 @@ jobs:
           
           ls -la
           # Command to connect to VPN using certificates
-          # sudo openvpn --config config.ovpn --cert client.crt --key client.key
+          sudo openvpn --config config.ovpn --cert client.crt --key client.key
 
