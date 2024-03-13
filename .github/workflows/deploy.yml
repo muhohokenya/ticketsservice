@@ -58,7 +58,7 @@ jobs:
           
       - name: SSH
         run: |
-          ssh ubuntu@10.0.141.195
+          ssh -v ubuntu@10.0.141.195
       
       
 
