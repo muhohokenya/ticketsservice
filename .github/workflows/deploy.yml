@@ -41,10 +41,8 @@ jobs:
       - name: Install VPN client
         run: |
             # Example: Install VPN
-            echo "deb [signed-by=/etc/apt/keyrings/openvpn.asc] https://packages.openvpn.net/openvpn3/debian $DISTRO main" | sudo tee /etc/apt/sources.list.d/openvpn-packages.list
-            echo DISTRO=$(lsb_release -c | awk '{print $2}')
             sudo apt update
-            sudo apt install openvpn3
+            sudo apt install -y openvpn openvpn-systemd-resolved  # For Ubuntu/Debian
           
 #      - name: Connect to VPN
 #        run: |
