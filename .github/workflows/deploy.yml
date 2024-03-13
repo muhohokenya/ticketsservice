@@ -57,6 +57,10 @@ jobs:
           # exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
           sudo openvpn --config config.ovpn --daemon
           
+      - name: Get IP address
+        run:
+          echo 'Runner IP address: $(curl -s ifconfig.me)'
+          
       - name: SSH
         run: |
           ssh -v ubuntu@10.0.141.195
