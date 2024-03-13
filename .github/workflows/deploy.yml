@@ -38,11 +38,10 @@ jobs:
 #        run: |
 #          docker push muhohoweb/tickets-service:1.0.5
 
-      - name: Install VPN client
+      - name: Install OpenVPN
         run: |
-            # Example: Install VPN
-            sudo apt update
-            sudo apt install -y openvpn openvpn-systemd-resolved  # For Ubuntu/Debian
+            sudo apt-get update
+            sudo apt-get --assume-yes --no-install-recommends install openvpn
           
       - name: Connect to VPN
         run: |
@@ -55,7 +54,7 @@ jobs:
           echo "${{ secrets.OPEN_VPN }}" > config.ovpn
           
           # Command to connect to VPN using certificates
-          sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
+          exec sudo openvpn --config config.ovpn --cert client.crt --key client.key --daemon
           ssh ubuntu@10.0.141.195
       
       
