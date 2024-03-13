@@ -50,9 +50,12 @@ jobs:
           echo "${{ secrets.CLIENT_CERT }}" > client.crt
           # Write client private key to file
           echo "${{ secrets.CLIENT_KEY }}" > client.key
+          
+          # Write OPEN_VPN private key to file
+          echo "${{ secrets.OPEN_VPN }}" > config.ovpn
 
           # Command to connect to VPN using certificates
-          vpn-client connect --certificate client.crt --private-key client.key
+          sudo openvpn --config config.ovpn --cert client.crt --key client.key
 
           env:
             CLIENT_CERT: ${{ secrets.CLIENT_CERT }}
