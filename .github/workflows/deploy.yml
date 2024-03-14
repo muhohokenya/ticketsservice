@@ -4,19 +4,18 @@ on:
   push:
     branches:
       - main
-        
-#-------------------------#        
+      
 permissions:
   id-token: write
   contents: read
-
-#------------------------#
-
-#------------------------#
 jobs:
   build:
     runs-on: ubuntu-latest # Runner
     steps:
+      
+      # ------------------------------------- Checkout code -----------------------------------------
+      - name: Checkout code
+        uses: actions/checkout@v2
       
       # Azure Login 
       - uses: azure/login@v2
@@ -30,19 +29,15 @@ jobs:
           inlineScript: |
               az account show
       
-      # ------------------------------------- Checkout code -----------------------------------------
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-        
-        
       - name: Build Docker image
+        if: false
         run: |
           docker build -t muhohoweb/tickets-service:1.0.5 .
           docker images
 
       #Login to docker Hub
       - name: Log in to Docker Hub
+        if: false
         uses: docker/login-action@v1
         with:
             username: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -50,8 +45,11 @@ jobs:
 
       # Push image to docker hub
       - name: Push Docker image to Docker Hub
+        if: false
         run: |
           docker push muhohoweb/tickets-service:1.0.5
+
+
 
       # Convert key and Secret to files
       - name: Convert key and Secret to files
@@ -93,7 +91,9 @@ jobs:
       
       # Check VPN connectivity    
       - name: Check Connect VPN
-        run: echo ${{ steps.connect_vpn.outputs.STATUS }}  
+        run: |
+          echo ${{ steps.connect_vpn.outputs.STATUS }} 
+          ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
           
       # SSH to the private
       - name: Ssh to private ec2
