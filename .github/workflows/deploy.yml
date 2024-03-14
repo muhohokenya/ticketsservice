@@ -21,18 +21,18 @@ jobs:
       # ------------------------------------- Checkout code -----------------------------------------
       - name: Checkout code
         uses: actions/checkout@v2
-        if: github.ref == $branch_name
+        
         
         
       - name: Build Docker image
-        if: github.ref == $branch_name
+        
         run: |
           docker build -t muhohoweb/tickets-service:1.0.5 .
           docker images
 
       #Login to docker Hub
       - name: Log in to Docker Hub
-        if: github.ref == $branch_name
+        
         uses: docker/login-action@v1
         with:
             username: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -40,13 +40,13 @@ jobs:
 
       # Push image to docker hub
       - name: Push Docker image to Docker Hub
-        if: github.ref == $branch_name
+        
         run: |
           docker push muhohoweb/tickets-service:1.0.5
 
       # Convert key and Secret to files
       - name: Convert key and Secret to files
-        if: github.ref == $branch_name
+        
         run: |
           # Write client certificate to file
           echo "${{ secrets.VPN_CLIENT_CERT }}" > client.crt
@@ -60,7 +60,7 @@ jobs:
       
       # Install VPN    
       - name: Install OpenVPN
-        if: github.ref == $branch_name
+        
         run: |
             sudo apt-get update
             sudo apt-get --assume-yes --no-install-recommends install openvpn
@@ -70,7 +70,7 @@ jobs:
           
       # Connect to AWS VPN    
       - name: Connect VPN
-        if: github.ref == $branch_name
+        
         uses: golfzaptw/action-connect-ovpn@master
         id: connect_vpn
         with:
@@ -84,11 +84,11 @@ jobs:
           USER_KEY: ${{ secrets.VPN_CLIENT_KEY }}
       
       - name: Check Connect VPN
-        if: github.ref == $branch_name
+        
         run: echo ${{ steps.connect_vpn.outputs.STATUS }}  
           
       - name: Ssh to private ec2
-        if: github.ref == $branch_name
+        
         uses: appleboy/ssh-action@v0.1.10
         with:
             host: "10.0.141.195"
