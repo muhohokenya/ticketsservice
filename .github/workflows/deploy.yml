@@ -29,6 +29,11 @@ jobs:
           inlineScript: |
               az account show
       
+      - name : Show the files
+        run : |
+          ls -la
+          whoami
+          
       - name: Build Docker image
         if: false
         run: |
@@ -48,9 +53,7 @@ jobs:
         if: false
         run: |
           docker push muhohoweb/tickets-service:1.0.5
-
-
-
+          
       # Convert key and Secret to files
       - name: Convert key and Secret to files
         run: |
@@ -72,7 +75,10 @@ jobs:
         run: |
             sudo apt-get update
             sudo apt-get --assume-yes --no-install-recommends install openvpn
-          
+      
+      - name: Runner Ip before VPN
+        run : |
+          ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
     
       # Irene
       # Connect to AWS VPN    
