@@ -104,7 +104,6 @@ jobs:
       # SSH to the private
       - name: Ssh to private ec2
         uses: appleboy/ssh-action@v0.1.10
-        if: false
         with:
             host: "10.0.141.195" # Should be added in secrets
             key: ${{ secrets.MAIN_KEY_PRIVATE }}
