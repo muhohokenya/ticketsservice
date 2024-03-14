@@ -18,6 +18,21 @@ jobs:
     runs-on: ubuntu-latest # Runner
     steps:
       
+      # Azure Login 
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az account show
+      
       # ------------------------------------- Checkout code -----------------------------------------
       - name: Checkout code
         uses: actions/checkout@v2
@@ -25,14 +40,12 @@ jobs:
         
         
       - name: Build Docker image
-        
         run: |
           docker build -t muhohoweb/tickets-service:1.0.5 .
           docker images
 
       #Login to docker Hub
       - name: Log in to Docker Hub
-        
         uses: docker/login-action@v1
         with:
             username: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -40,13 +53,11 @@ jobs:
 
       # Push image to docker hub
       - name: Push Docker image to Docker Hub
-        
         run: |
           docker push muhohoweb/tickets-service:1.0.5
 
       # Convert key and Secret to files
       - name: Convert key and Secret to files
-        
         run: |
           # Write client certificate to file
           echo "${{ secrets.VPN_CLIENT_CERT }}" > client.crt
@@ -59,8 +70,7 @@ jobs:
           
       
       # Install VPN    
-      - name: Install OpenVPN
-        
+      - name: Install OpenVPN      
         run: |
             sudo apt-get update
             sudo apt-get --assume-yes --no-install-recommends install openvpn
@@ -70,7 +80,6 @@ jobs:
           
       # Connect to AWS VPN    
       - name: Connect VPN
-        
         uses: golfzaptw/action-connect-ovpn@master
         id: connect_vpn
         with:
@@ -90,6 +99,7 @@ jobs:
       - name: Ssh to private ec2
         
         uses: appleboy/ssh-action@v0.1.10
+        if: false
         with:
             host: "10.0.141.195"
             key: ${{ secrets.MAIN_KEY_PRIVATE }}
@@ -103,21 +113,6 @@ jobs:
       - name: kill vpn
         if: always()
         run: sudo killall openvpn
-      
-      # Azure Login 
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Azure CLI script
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az account show
         
       
       
