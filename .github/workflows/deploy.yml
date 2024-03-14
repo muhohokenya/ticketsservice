@@ -68,16 +68,18 @@ jobs:
           # Write OPEN_VPN private key to file
           echo "${{ secrets.OPEN_VPN }}" > config.ovpn
           
+          # Write the private key on the current folder
+          echo "${{ secrets.MAIN_KEY_PRIVATE }}" > main_key.pem
+          
       
       # Install VPN    
       - name: Install OpenVPN      
         run: |
             sudo apt-get update
             sudo apt-get --assume-yes --no-install-recommends install openvpn
-            echo "${{ secrets.OPEN_VPN }}" > config.ovpn
-            echo "${{ secrets.MAIN_KEY_PRIVATE }}" > main_key.pem
-       
           
+    
+      # Irene
       # Connect to AWS VPN    
       - name: Connect VPN
         uses: golfzaptw/action-connect-ovpn@master
@@ -92,16 +94,16 @@ jobs:
           USER_CRT: ${{ secrets.VPN_CLIENT_CERT }}
           USER_KEY: ${{ secrets.VPN_CLIENT_KEY }}
       
+      # Check VPN connectivity    
       - name: Check Connect VPN
-        
         run: echo ${{ steps.connect_vpn.outputs.STATUS }}  
           
+      # SSH to the private
       - name: Ssh to private ec2
-        
         uses: appleboy/ssh-action@v0.1.10
         if: false
         with:
-            host: "10.0.141.195"
+            host: "10.0.141.195" # Should be added in secrets
             key: ${{ secrets.MAIN_KEY_PRIVATE }}
             username: "ubuntu"
             port: 22
